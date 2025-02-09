@@ -1,0 +1,10 @@
+requests
+python-dotenv
+pandas
+numpy
+coinbase
+scikit-learn
+streamlit
+plotly
+textblob
+tweepy
