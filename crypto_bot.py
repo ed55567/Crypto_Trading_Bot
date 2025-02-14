@@ -1,149 +1,130 @@
-import requests
-import time
+# System & Utility Imports
 import os
+import sys
+import time
+import threading
+from datetime import datetime
 import logging
-import pandas as pd
-import numpy as np
-from coinbase.wallet.client import Client
-from dotenv import load_dotenv
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-import streamlit as st
-import plotly.express as px
 
-# Load Environment Variables
+# External Libraries
+import requests
+from dotenv import load_dotenv
+from coinbase.wallet.client import Client
+from flask import Flask, render_template, jsonify, request, abort
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+# Load environment variables
 load_dotenv()
 
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
-COINBASE_API_KEY = os.getenv("COINBASE_API_KEY")
-COINBASE_API_SECRET = os.getenv("COINBASE_API_SECRET")
+API_KEY = os.getenv("COINBASE_API_KEY")
+API_SECRET = os.getenv("COINBASE_API_SECRET")
 
-# Configure Logging
-logging.basicConfig(filename="trade_log.log", level=logging.INFO, format='%(asctime)s - %(message)s')
+if not API_KEY or not API_SECRET:
+    raise ValueError("API Key and Secret are required. Check your .env file.")
 
-# Connect to Coinbase API
-def connect_coinbase():
+client = Client(API_KEY, API_SECRET)
+
+# Parameters for buying the dip
+LOOKBACK_PERIOD = 5  # Check last 5 minutes
+PRICE_DROP_PERCENTAGE = 2  # Minimum % drop to consider as a dip
+BUY_AMOUNT_USD = 2  # Amount to buy in USD
+CHECK_INTERVAL = 60  # Check every 60 seconds
+
+app = Flask(__name__)
+
+# Security: Rate limiting to prevent abuse
+limiter = Limiter(get_remote_address, app=app, default_limits=["100 per hour", "10 per minute"])
+
+# Enable logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+price_history = {"BTC": [], "ETH": [], "SOL": []}
+time_history = {"BTC": [], "ETH": [], "SOL": []}  # Track timestamps
+latest_prices = {"BTC": 0.0, "ETH": 0.0, "SOL": 0.0}
+status_message = "Monitoring market..."
+dip_detected = {"BTC": False, "ETH": False, "SOL": False}
+
+def get_crypto_price(symbol):
     try:
-        return Client(COINBASE_API_KEY, COINBASE_API_SECRET)
-    except Exception as e:
-        logging.error(f"Error connecting to Coinbase API: {e}")
-        return None
+        response = requests.get(f'https://api.coinbase.com/v2/prices/{symbol}-USD/spot', timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        return float(data['data']['amount'])
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Error fetching {symbol} price: {e}")
+        return latest_prices.get(symbol, 0.0)
 
-client = connect_coinbase()
-
-# Fetch Price from Coinbase API with Caching and Retry Mechanism
-def get_price(currency_pair="BTC-USD", retries=3, delay=5):
-    if not client:
-        return None
-    for attempt in range(retries):
-        try:
-            price = client.get_spot_price(currency_pair=currency_pair)
-            return float(price['amount'])
-        except Exception as e:
-            logging.error(f"Error fetching price for {currency_pair}: {e}")
-            time.sleep(delay)
-    return None
-
-# Compute Technical Indicators
-def compute_rsi(df, window=14):
-    delta = df['Close'].diff()
-    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
-    rs = gain / loss
-    df['RSI'] = 100 - (100 / (1 + rs))
-    return df
-
-def compute_macd(df):
-    short_ema = df['Close'].ewm(span=12, adjust=False).mean()
-    long_ema = df['Close'].ewm(span=26, adjust=False).mean()
-    df['MACD'] = short_ema - long_ema
-    df['Signal_Line'] = df['MACD'].ewm(span=9, adjust=False).mean()
-    return df
-
-def compute_indicators(df):
-    df['SMA'] = df['Close'].rolling(window=7).mean()
-    df['EMA'] = df['Close'].ewm(span=7, adjust=False).mean()
-    df = compute_rsi(df)
-    df = compute_macd(df)
-    df.dropna(inplace=True)
-    return df
-
-# AI-based Price Prediction
-def ai_price_prediction(df):
-    df = compute_indicators(df)
-    df['Future_Trend'] = np.where(df['Close'].pct_change().shift(-1) > 0, 'Bullish', 'Bearish')
-    features = df[['SMA', 'EMA', 'RSI', 'MACD', 'Signal_Line']]
-    labels = df['Future_Trend']
-    
-    X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42)
-    model = RandomForestClassifier(n_estimators=200, random_state=42)
-    model.fit(X_train, y_train)
-    
-    y_pred = model.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
-    logging.info(f"AI Model Accuracy: {accuracy:.2f}")
-    
-    return model.predict(features[-1:].values.reshape(1, -1))[0]
-
-# Decision Making for Trading
-def trade_decision():
-    btc_price = get_price("BTC-USD")
-    if btc_price is None:
-        return "Error fetching BTC price."
-    
-    df = pd.DataFrame({'Close': [btc_price]})
-    df = compute_indicators(df)
-    rsi = df['RSI'].iloc[-1]
-    macd = df['MACD'].iloc[-1]
-    signal = df['Signal_Line'].iloc[-1]
-    
-    if btc_price < 40000 and rsi < 30 and macd > signal:
-        decision = "Strong Buy"
-    elif btc_price < 40000:
-        decision = "Buy"
-    elif btc_price > 60000 and rsi > 70 and macd < signal:
-        decision = "Strong Sell"
-    elif btc_price > 60000:
-        decision = "Sell"
-    else:
-        decision = "Hold"
-    
-    logging.info(f"Trade decision: {decision} at BTC price: {btc_price}")
-    return decision
-
-# Streamlit Dashboard
-def show_dashboard():
-    st.title("📊 Crypto Portfolio & Trading Bot")
-    
-    assets = ["BTC-USD", "ETH-USD", "SOL-USD"]
-    
+def buy_crypto(symbol, amount):
+    global status_message, dip_detected
     try:
-        prices = {asset.split('-')[0]: get_price(asset) or 0 for asset in assets}
-        df = pd.DataFrame(prices.items(), columns=["Asset", "Price"])
-        df["PnL (%)"] = df["Price"].pct_change() * 100
-        
-        fig_price = px.bar(df, x="Asset", y="Price", title="Current Prices", text="Price")
-        st.plotly_chart(fig_price)
-        
-        decision = trade_decision()
-        st.subheader(f"Trade Decision: {decision}")
-        
-        btc_df = pd.DataFrame({'Close': [get_price("BTC-USD")]})
-        btc_df = compute_indicators(btc_df)
-        
-        fig_rsi = px.line(btc_df, y="RSI", title="RSI Trend (BTC)")
-        fig_macd = px.line(btc_df, y=["MACD", "Signal_Line"], title="MACD & Signal Line (BTC)")
-        
-        st.plotly_chart(fig_rsi)
-        st.plotly_chart(fig_macd)
-        
-        st.table(df)
-    
+        account = client.get_primary_account()
+        payment_method = client.get_payment_methods()[0]  # Use first available method
+        txn = account.buy(amount=str(amount), currency='USD', payment_method=payment_method['id'])
+        status_message = f"Bought ${amount} worth of {symbol} at {txn['total']} USD/{symbol}"
+        dip_detected[symbol] = False
+        logging.info(status_message)
     except Exception as e:
-        logging.error(f"Error in dashboard: {e}")
-        st.error("Failed to load dashboard. Please try again later.")
+        logging.error(f"Failed to execute buy order: {e}")
+        status_message = "Error executing purchase. Check logs."
+
+def monitor_market():
+    global latest_prices, status_message, dip_detected
+    while True:
+        for symbol in ["BTC", "ETH", "SOL"]:
+            latest_prices[symbol] = get_crypto_price(symbol)
+            current_time = datetime.now().strftime("%H:%M:%S")
+            price_history[symbol].append(latest_prices[symbol])
+            time_history[symbol].append(current_time)
+            
+            if len(price_history[symbol]) > LOOKBACK_PERIOD:
+                price_history[symbol].pop(0)
+                time_history[symbol].pop(0)
+
+            if len(price_history[symbol]) == LOOKBACK_PERIOD:
+                max_price = max(price_history[symbol])
+                price_drop = ((max_price - latest_prices[symbol]) / max_price) * 100
+                
+                if price_drop >= PRICE_DROP_PERCENTAGE:
+                    status_message = f"Dip detected for {symbol}: {price_drop:.2f}% drop. Click 'Buy' to confirm."
+                    dip_detected[symbol] = True
+                else:
+                    status_message = f"No significant dip detected for {symbol}. Current drop: {price_drop:.2f}%"
+                    dip_detected[symbol] = False
+        
+        time.sleep(CHECK_INTERVAL)
+
+@app.route('/')
+@limiter.limit("5 per second")
+def home():
+    return render_template('index.html')
+
+@app.route('/data')
+@limiter.limit("10 per second")
+def data():
+    return jsonify({
+        "latest_prices": latest_prices,
+        "status": status_message,
+        "price_history": price_history,
+        "time_history": time_history,
+        "dip_detected": dip_detected
+    })
+
+@app.route('/buy/<symbol>', methods=['POST'])
+@limiter.limit("3 per minute")
+def buy(symbol):
+    global dip_detected
+    if symbol not in ["BTC", "ETH", "SOL"]:
+        abort(400, "Invalid symbol")
+    
+    if dip_detected.get(symbol, False):
+        buy_crypto(symbol, BUY_AMOUNT_USD)
+        return jsonify({"message": f"Purchase confirmed for {symbol}!", "status": status_message})
+    return jsonify({"message": f"No dip detected for {symbol} purchase.", "status": status_message})
 
 if __name__ == "__main__":
-    show_dashboard()
+    threading.Thread(target=monitor_market, daemon=True).start()
+    try:
+        app.run(debug=False, host='0.0.0.0', port=5001)  # Changed port to avoid conflicts
+    except OSError as e:
+        logging.error(f"Port 5001 is in use. Please choose a different port or close the conflicting process.")

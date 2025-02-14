@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crypto Dip Buyer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script>
+        let priceCharts = {};
+
+        function updateData() {
+            fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Received data:", data); // Debugging
+
+                document.getElementById('btc-price').innerText = "$" + data.latest_prices.BTC;
+                document.getElementById('eth-price').innerText = "$" + data.latest_prices.ETH;
+                document.getElementById('sol-price').innerText = "$" + data.latest_prices.SOL;
+                document.getElementById('status').innerText = data.status;
+
+                updateChart('BTC', data.time_history.BTC, data.price_history.BTC);
+                updateChart('ETH', data.time_history.ETH, data.price_history.ETH);
+                updateChart('SOL', data.time_history.SOL, data.price_history.SOL);
+
+                toggleBuyButton('BTC', data.dip_detected.BTC);
+                toggleBuyButton('ETH', data.dip_detected.ETH);
+                toggleBuyButton('SOL', data.dip_detected.SOL);
+            })
+            .catch(error => console.error("Error fetching data:", error));
+        }
+
+        function toggleBuyButton(symbol, isDipDetected) {
+            const buyButton = document.getElementById(`buy-${symbol}`);
+            buyButton.style.display = isDipDetected ? 'block' : 'none';
+        }
+
+        function buyCrypto(symbol) {
+            fetch(`/buy/${symbol}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                updateTransactionHistory(symbol, data.message);
+                updateData();
+            })
+            .catch(error => console.error("Error processing buy:", error));
+        }
+
+        function updateTransactionHistory(symbol, message) {
+            let historyList = document.getElementById('transaction-history');
+            let listItem = document.createElement("li");
+            listItem.className = "list-group-item";
+            listItem.textContent = `${symbol}: ${message}`;
+            historyList.prepend(listItem);
+        }
+
+        function createChart(symbol) {
+            const ctx = document.getElementById(`${symbol}-chart`).getContext('2d');
+            priceCharts[symbol] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: `${symbol} Price (USD)`,
+                        data: [],
+                        borderColor: symbol === 'BTC' ? 'blue' : symbol === 'ETH' ? 'green' : 'purple',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { type: 'category', title: { display: true, text: 'Time' } },
+                        y: { title: { display: true, text: 'Price (USD)' } }
+                    }
+                }
+            });
+        }
+
+        function updateChart(symbol, timeHistory, priceHistory) {
+            if (!priceCharts[symbol]) return;
+            priceCharts[symbol].data.labels = timeHistory;
+            priceCharts[symbol].data.datasets[0].data = priceHistory;
+            priceCharts[symbol].update();
+        }
+
+        window.onload = function () {
+            createChart('BTC');
+            createChart('ETH');
+            createChart('SOL');
+            updateData();
+            setInterval(updateData, 5000);
+        };
+    </script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .crypto-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        .btn-buy {
+            width: 100%;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center text-primary">Crypto Dip Buyer Bot</h1>
+        <p class="text-center"><strong>Status:</strong> <span id="status">Monitoring market...</span></p>
+
+        <div class="crypto-container">
+            <h3>Bitcoin (BTC)</h3>
+            <p><strong>Price:</strong> <span id="btc-price">Loading...</span></p>
+            <div class="chart-container">
+                <canvas id="BTC-chart"></canvas>
+            </div>
+            <button id="buy-BTC" class="btn btn-success btn-buy mt-2" style="display:none;" onclick="buyCrypto('BTC')">Buy BTC</button>
+        </div>
+
+        <div class="crypto-container mt-4">
+            <h3>Ethereum (ETH)</h3>
+            <p><strong>Price:</strong> <span id="eth-price">Loading...</span></p>
+            <div class="chart-container">
+                <canvas id="ETH-chart"></canvas>
+            </div>
+            <button id="buy-ETH" class="btn btn-success btn-buy mt-2" style="display:none;" onclick="buyCrypto('ETH')">Buy ETH</button>
+        </div>
+
+        <div class="crypto-container mt-4">
+            <h3>Solana (SOL)</h3>
+            <p><strong>Price:</strong> <span id="sol-price">Loading...</span></p>
+            <div class="chart-container">
+                <canvas id="SOL-chart"></canvas>
+            </div>
+            <button id="buy-SOL" class="btn btn-success btn-buy mt-2" style="display:none;" onclick="buyCrypto('SOL')">Buy SOL</button>
+        </div>
+
+        <div class="crypto-container mt-4">
+            <h3>Transaction History</h3>
+            <ul id="transaction-history" class="list-group"></ul>
+        </div>
+    </div>
+</body>
+</html>
+
+

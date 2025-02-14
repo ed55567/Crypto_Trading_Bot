@@ -2,3 +2,174 @@
 2025-02-09 02:17:20,523 - Market Sentiment: Bullish
 2025-02-09 02:24:13,444 - Market Sentiment: Bullish
 2025-02-09 02:24:41,986 - Market Sentiment: Bullish
+2025-02-09 13:40:59,083 - Error in dashboard: single positional indexer is out-of-bounds
+2025-02-09 13:41:12,461 - Error in dashboard: single positional indexer is out-of-bounds
+2025-02-09 13:48:00,505 - Error in dashboard: single positional indexer is out-of-bounds
+2025-02-09 13:48:11,236 - Error in dashboard: single positional indexer is out-of-bounds
+2025-02-09 15:19:45,241 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-09 15:20:15,896 - Trade alert sent: Sell
+2025-02-09 15:22:31,122 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-09 15:23:01,638 - Trade alert sent: Sell
+2025-02-09 15:30:57,825 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-09 15:34:59,223 - Trade alert sent: Sell for BTC-USD
+2025-02-09 15:34:59,614 - Trade alert sent: Buy for ETH-USD
+2025-02-09 15:34:59,983 - Trade alert sent: Buy for SOL-USD
+2025-02-09 15:35:00,366 - Trade alert sent: Buy for XRP-USD
+2025-02-09 15:35:00,733 - Trade alert sent: Buy for MATIC-USD
+2025-02-09 15:35:01,103 - Trade alert sent: Buy for LINK-USD
+2025-02-09 15:35:01,472 - Trade alert sent: Buy for INJ-USD
+2025-02-09 15:35:01,840 - Trade alert sent: Buy for ARB-USD
+2025-02-09 15:55:01,561 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-09 15:59:03,061 - Trade alert sent: Sell for BTC-USD
+2025-02-09 15:59:04,447 - Trade alert sent: Buy for ETH-USD
+2025-02-09 15:59:04,816 - Trade alert sent: Buy for SOL-USD
+2025-02-09 15:59:05,197 - Trade alert sent: Buy for XRP-USD
+2025-02-09 15:59:05,567 - Trade alert sent: Buy for MATIC-USD
+2025-02-09 15:59:05,936 - Trade alert sent: Buy for LINK-USD
+2025-02-09 15:59:06,307 - Trade alert sent: Buy for INJ-USD
+2025-02-09 15:59:06,674 - Trade alert sent: Buy for ARB-USD
+2025-02-09 16:16:22,316 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-09 16:16:31,007 - Trade alert sent: Sell for BTC-USD
+2025-02-09 16:16:31,382 - Trade alert sent: Buy for ETH-USD
+2025-02-09 16:16:31,752 - Trade alert sent: Buy for SOL-USD
+2025-02-09 16:16:32,117 - Trade alert sent: Buy for XRP-USD
+2025-02-09 16:16:32,488 - Trade alert sent: Buy for MATIC-USD
+2025-02-09 16:16:32,856 - Trade alert sent: Buy for LINK-USD
+2025-02-09 16:16:33,224 - Trade alert sent: Buy for INJ-USD
+2025-02-09 16:16:33,598 - Trade alert sent: Buy for ARB-USD
+2025-02-09 18:32:43,839 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-09 18:32:52,422 - Trade alert sent: Sell for BTC-USD
+2025-02-09 18:32:52,851 - Trade alert sent: Buy for ETH-USD
+2025-02-09 18:32:53,267 - Trade alert sent: Buy for SOL-USD
+2025-02-09 18:32:53,678 - Trade alert sent: Buy for XRP-USD
+2025-02-09 18:32:54,085 - Trade alert sent: Buy for MATIC-USD
+2025-02-09 18:32:54,617 - Trade alert sent: Buy for LINK-USD
+2025-02-09 18:32:55,261 - Trade alert sent: Buy for INJ-USD
+2025-02-09 18:32:55,701 - Trade alert sent: Buy for ARB-USD
+2025-02-09 21:09:37,458 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-09 21:09:46,122 - Trade alert sent: Sell for BTC-USD
+2025-02-09 21:09:46,535 - Trade alert sent: Buy for ETH-USD
+2025-02-09 21:09:46,966 - Trade alert sent: Buy for SOL-USD
+2025-02-09 21:09:47,605 - Trade alert sent: Buy for XRP-USD
+2025-02-09 21:09:48,277 - Trade alert sent: Buy for MATIC-USD
+2025-02-09 21:09:48,961 - Trade alert sent: Buy for LINK-USD
+2025-02-09 21:09:49,653 - Trade alert sent: Buy for INJ-USD
+2025-02-09 21:09:50,502 - Trade alert sent: Buy for ARB-USD
+2025-02-09 21:16:35,395 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-09 21:16:43,995 - Trade alert sent: Sell for BTC-USD
+2025-02-09 21:16:44,405 - Trade alert sent: Buy for ETH-USD
+2025-02-09 21:16:44,818 - Trade alert sent: Buy for SOL-USD
+2025-02-09 21:16:45,234 - Trade alert sent: Buy for XRP-USD
+2025-02-09 21:16:45,646 - Trade alert sent: Buy for MATIC-USD
+2025-02-09 21:16:46,046 - Trade alert sent: Buy for LINK-USD
+2025-02-09 21:16:46,451 - Trade alert sent: Buy for INJ-USD
+2025-02-09 21:16:46,850 - Trade alert sent: Buy for ARB-USD
+2025-02-10 01:50:02,345 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 01:50:10,960 - Trade alert sent: Sell for BTC-USD
+2025-02-10 01:50:11,332 - Trade alert sent: Buy for ETH-USD
+2025-02-10 01:50:11,709 - Trade alert sent: Buy for SOL-USD
+2025-02-10 01:50:12,083 - Trade alert sent: Buy for XRP-USD
+2025-02-10 01:50:12,453 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 01:50:12,835 - Trade alert sent: Buy for LINK-USD
+2025-02-10 01:50:13,204 - Trade alert sent: Buy for INJ-USD
+2025-02-10 01:50:13,565 - Trade alert sent: Buy for ARB-USD
+2025-02-10 01:57:13,678 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 01:57:23,292 - Trade alert sent: Sell for BTC-USD
+2025-02-10 01:57:24,651 - Trade alert sent: Buy for ETH-USD
+2025-02-10 01:57:25,010 - Trade alert sent: Buy for SOL-USD
+2025-02-10 01:57:25,385 - Trade alert sent: Buy for XRP-USD
+2025-02-10 01:57:25,768 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 01:57:26,157 - Trade alert sent: Buy for LINK-USD
+2025-02-10 01:57:26,510 - Trade alert sent: Buy for INJ-USD
+2025-02-10 01:57:26,882 - Trade alert sent: Buy for ARB-USD
+2025-02-10 01:59:51,289 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 01:59:59,763 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:00:00,137 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:00:00,494 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:00:00,861 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:00:01,229 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:00:01,589 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:00:01,946 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:00:02,321 - Trade alert sent: Buy for ARB-USD
+2025-02-10 02:00:07,779 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 02:00:16,231 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:00:16,607 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:00:16,976 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:00:17,346 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:00:17,713 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:00:18,081 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:00:18,452 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:00:18,820 - Trade alert sent: Buy for ARB-USD
+2025-02-10 02:00:24,645 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 02:00:33,109 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:00:33,466 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:00:33,838 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:00:34,216 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:00:34,571 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:00:34,943 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:00:35,314 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:00:35,685 - Trade alert sent: Buy for ARB-USD
+2025-02-10 02:08:59,586 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 02:09:08,165 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:09:08,538 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:09:08,911 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:09:09,283 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:09:09,657 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:09:10,032 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:09:10,410 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:09:10,780 - Trade alert sent: Buy for ARB-USD
+2025-02-10 02:12:06,950 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 02:12:15,464 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:12:15,828 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:12:16,202 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:12:16,574 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:12:16,953 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:12:17,336 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:12:17,706 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:12:18,079 - Trade alert sent: Buy for ARB-USD
+2025-02-10 02:30:41,857 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 02:30:50,473 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:30:50,836 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:30:51,210 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:30:51,577 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:30:51,950 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:30:52,320 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:30:52,687 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:30:53,051 - Trade alert sent: Buy for ARB-USD
+2025-02-10 02:39:49,362 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 02:39:57,945 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:39:58,327 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:39:58,691 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:39:59,054 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:39:59,427 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:39:59,800 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:40:00,167 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:40:00,541 - Trade alert sent: Buy for ARB-USD
+2025-02-10 02:40:17,191 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 02:40:25,647 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:40:26,053 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:40:26,421 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:40:26,782 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:40:27,146 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:40:27,527 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:40:27,896 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:40:28,255 - Trade alert sent: Buy for ARB-USD
+2025-02-10 02:44:31,215 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 02:44:39,730 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:44:40,105 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:44:40,472 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:44:40,836 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:44:41,197 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:44:41,586 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:44:41,952 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:44:42,324 - Trade alert sent: Buy for ARB-USD
+2025-02-10 02:45:59,715 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
+2025-02-10 02:46:08,214 - Trade alert sent: Sell for BTC-USD
+2025-02-10 02:46:08,577 - Trade alert sent: Buy for ETH-USD
+2025-02-10 02:46:08,936 - Trade alert sent: Buy for SOL-USD
+2025-02-10 02:46:09,299 - Trade alert sent: Buy for XRP-USD
+2025-02-10 02:46:09,671 - Trade alert sent: Buy for MATIC-USD
+2025-02-10 02:46:10,034 - Trade alert sent: Buy for LINK-USD
+2025-02-10 02:46:10,395 - Trade alert sent: Buy for INJ-USD
+2025-02-10 02:46:10,766 - Trade alert sent: Buy for ARB-USD
+2025-02-10 03:00:25,366 - Error fetching portfolio balances: Expecting value: line 1 column 1 (char 0)
